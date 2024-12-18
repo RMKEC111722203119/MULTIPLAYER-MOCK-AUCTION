@@ -75,6 +75,7 @@ const AuctionSpace = () => {
             setHighestBidTeam(highestBidTeam);
         }
     });
+  });
 }, []);
 
 
