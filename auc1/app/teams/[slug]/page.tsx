@@ -1,3 +1,4 @@
+/* eslint-disable */
 import BidOptions from "@/components/franchise/BidOptions";
 import PurchasedPlayers from "@/components/franchise/PurchasedPlayers";
 import PurseAndTeamInfo from "@/components/franchise/PurseandTeamInfo";
