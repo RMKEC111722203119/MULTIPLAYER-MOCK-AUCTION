@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { FaGavel, FaUsers, FaMoneyBillWave } from "react-icons/fa";
 import socket from "@/socket/socket";
 import axios from "axios";
 
@@ -21,6 +22,19 @@ interface AuctionState {
   highestBidTeam: string;
 }
 
+const teamColors: { [key: string]: string } = {
+  "Mumbai Indians": "text-blue-500",
+  "Chennai Super Kings": "text-yellow-500",
+  "Delhi Capitals": "text-blue-600",
+  "Royal Challengers Bangalore": "text-red-600",
+  "Kolkata Knight Riders": "text-purple-700",
+  "Rajasthan Royals": "text-pink-500",
+  "Sunrisers Hyderabad": "text-orange-500",
+  "Punjab Kings": "text-red-500",
+  "Lucknow Super Giants": "text-cyan-600",
+  "Gujarat Titans": "text-teal-500",
+};
+
 const AuctionSpace = () => {
   const [currentPlayer, setCurrentPlayer] = useState<Player | null>(null);
   const [highestBid, setHighestBid] = useState<number>(0);
@@ -30,6 +44,19 @@ const AuctionSpace = () => {
   const [showRtmCard, setShowRtmCard] = useState<boolean>(false);
   const [rtmAmount, setRtmAmount] = useState<number>(0);
   const [selectedTeam, setSelectedTeam] = useState<string>("");
+
+  const teamNames = [
+    "Mumbai Indians",
+    "Chennai Super Kings",
+    "Delhi Capitals",
+    "Royal Challengers Bangalore",
+    "Kolkata Knight Riders",
+    "Rajasthan Royals",
+    "Sunrisers Hyderabad",
+    "Punjab Kings",
+    "Lucknow Super Giants",
+    "Gujarat Titans",
+  ];
 
   useEffect(() => {
     const fakePlayer: Player = {
@@ -74,6 +101,7 @@ const AuctionSpace = () => {
       setHighestBidTeam(data.teamName);
     });
 
+    // Cleanup function to remove socket listeners
     return () => {
       socket.off("playerSelected");
       socket.off("updateBid");
@@ -84,6 +112,10 @@ const AuctionSpace = () => {
     if (currentPlayer) {
       socket.emit("auctionAction", { player: currentPlayer, action });
     }
+  };
+
+  const handleRtmClick = () => {
+    setShowRtmCard(true);
   };
 
   const handleRtmSubmit = async () => {
@@ -106,9 +138,13 @@ const AuctionSpace = () => {
     setShowRtmCard(false);
   };
 
+  const handleRtmCancel = () => {
+    setShowRtmCard(false);
+  };
+
   return (
     <div className="p-6 bg-gradient-to-r from-gray-100 to-gray-300 shadow-lg rounded-lg">
-      {/* UI Code */}
+      {/* JSX Code for the UI goes here */}
     </div>
   );
 };
