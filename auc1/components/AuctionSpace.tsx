@@ -37,6 +37,20 @@ const teamColors: { [key: string]: string } = {
 
 const AuctionSpace = () => {
   const [currentPlayer, setCurrentPlayer] = useState<Player | null>(null);
+useEffect(() => {
+    // Initialize with fake data
+    const fakePlayer: Player = {
+        firstName: "waiting for",
+        surname: "Auction to start",
+        specialism: "loading...",
+        reservePrice: 0,
+        country: "Loading...",
+    };
+
+    setCurrentPlayer(fakePlayer);
+    setHighestBid(fakePlayer.reservePrice);
+    setHighestBidTeam("Mumbai Indians");
+}, []);
   const [highestBid, setHighestBid] = useState<number>(0);
   const [highestBidTeam, setHighestBidTeam] = useState<string>('');
   const pathname = usePathname();
