@@ -4,7 +4,7 @@ import PurseAndTeamInfo from "@/components/franchise/PurseandTeamInfo";
 import Retention from "@/components/franchise/Retention";
 import UpcomingPlayers from "@/components/franchise/UpcomingPlayers";
 
-const Page = ({ params }: { params: { slug: string } }) => {
+const Page = async ({ params }: PageProps) => {
     const { slug } = params;
     const fslug = slug.replace(/%20/g, " ");
     return (
@@ -37,4 +37,3 @@ const Page = ({ params }: { params: { slug: string } }) => {
   };
   
   export default Page;
-  
