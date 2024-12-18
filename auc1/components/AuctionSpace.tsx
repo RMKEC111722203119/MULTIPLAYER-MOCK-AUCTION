@@ -1,9 +1,9 @@
 "use client";
-import React, { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
-import { FaGavel, FaUsers, FaMoneyBillWave } from 'react-icons/fa';
-import socket from '@/socket/socket';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { FaGavel, FaUsers, FaMoneyBillWave } from "react-icons/fa";
+import socket from "@/socket/socket";
+import axios from "axios";
 
 interface Player {
   firstName: string;
@@ -37,27 +37,13 @@ const teamColors: { [key: string]: string } = {
 
 const AuctionSpace = () => {
   const [currentPlayer, setCurrentPlayer] = useState<Player | null>(null);
-useEffect(() => {
-    // Initialize with fake data
-    const fakePlayer: Player = {
-        firstName: "waiting for",
-        surname: "Auction to start",
-        specialism: "loading...",
-        reservePrice: 0,
-        country: "Loading...",
-    };
-
-    setCurrentPlayer(fakePlayer);
-    setHighestBid(fakePlayer.reservePrice);
-    setHighestBidTeam("Mumbai Indians");
-}, []);
   const [highestBid, setHighestBid] = useState<number>(0);
-  const [highestBidTeam, setHighestBidTeam] = useState<string>('');
+  const [highestBidTeam, setHighestBidTeam] = useState<string>("");
   const pathname = usePathname();
   const [isAuctioneer, setIsAuctioneer] = useState<boolean>(true);
   const [showRtmCard, setShowRtmCard] = useState<boolean>(false);
   const [rtmAmount, setRtmAmount] = useState<number>(0);
-  const [selectedTeam, setSelectedTeam] = useState<string>('');
+  const [selectedTeam, setSelectedTeam] = useState<string>("");
 
   const teamNames = [
     "Mumbai Indians",
@@ -73,7 +59,21 @@ useEffect(() => {
   ];
 
   useEffect(() => {
-    if (pathname === '/Auctioneer') {
+    const fakePlayer: Player = {
+      firstName: "waiting for",
+      surname: "Auction to start",
+      specialism: "loading...",
+      reservePrice: 0,
+      country: "Loading...",
+    };
+
+    setCurrentPlayer(fakePlayer);
+    setHighestBid(fakePlayer.reservePrice);
+    setHighestBidTeam("Mumbai Indians");
+  }, []);
+
+  useEffect(() => {
+    if (pathname === "/Auctioneer") {
       setIsAuctioneer(true);
     } else {
       setIsAuctioneer(false);
@@ -87,29 +87,29 @@ useEffect(() => {
       setHighestBidTeam(data.highestBidTeam);
     });
 
-    socket.on('playerSelected', (player: Player) => {
+    socket.on("playerSelected", (player: Player) => {
       setCurrentPlayer(null); // Trigger exit animation
       setTimeout(() => {
         setCurrentPlayer(player); // Trigger enter animation
         setHighestBid(player.reservePrice);
-        setHighestBidTeam('');
+        setHighestBidTeam("");
       }, 300); // Match this duration with the exit animation duration
     });
 
-    socket.on('updateBid', (data: { amount: number; teamName: string }) => {
+    socket.on("updateBid", (data: { amount: number; teamName: string }) => {
       setHighestBid(data.amount);
       setHighestBidTeam(data.teamName);
     });
 
     return () => {
-      socket.off('playerSelected');
-      socket.off('updateBid');
+      socket.off("playerSelected");
+      socket.off("updateBid");
     };
   }, []);
 
   const handleAuctionAction = (action: string) => {
     if (currentPlayer) {
-      socket.emit('auctionAction', { player: currentPlayer, action });
+      socket.emit("auctionAction", { player: currentPlayer, action });
     }
   };
 
@@ -119,7 +119,12 @@ useEffect(() => {
 
   const handleRtmSubmit = async () => {
     if (currentPlayer) {
-      const updatedPlayer = { ...currentPlayer, soldStatus: "sold", soldPrice: rtmAmount, soldTeam: selectedTeam };
+      const updatedPlayer = {
+        ...currentPlayer,
+        soldStatus: "sold",
+        soldPrice: rtmAmount,
+        soldTeam: selectedTeam,
+      };
       try {
         await axios.post("http://localhost:5000/auctioneer/rtm", {
           payload: updatedPlayer,
@@ -127,7 +132,7 @@ useEffect(() => {
       } catch (error) {
         window.alert("Error submitting RTM: " + error);
       }
-      handleAuctionAction('rtm');
+      handleAuctionAction("rtm");
     }
     setShowRtmCard(false);
   };
@@ -138,7 +143,7 @@ useEffect(() => {
 
   return (
     <div className="p-6 bg-gradient-to-r from-gray-100 to-gray-300 shadow-lg rounded-lg">
-      {/* JSX Code as in the original */}
+      {/* JSX Code for the UI goes here */}
     </div>
   );
 };
