@@ -39,7 +39,10 @@ const UpcomingPlayersToAuction = () => {
       const data = await response.json();
       setPlayers(data.docs || []);  // Ensure players are always an array
       setTotalPages(data.totalPages || 1);
-      setFilteredPlayers(data.docs || []);  // Ensure filteredPlayers is initialized
+      setFilteredPlayers(data.docs || []);
+      setPageSize(10)  
+      console.log("fetchUpcomingPlayers",players);
+      // Ensure filteredPlayers is initialized
     };
 
     fetchUpcomingPlayers();

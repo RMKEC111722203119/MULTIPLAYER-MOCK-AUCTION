@@ -60,7 +60,7 @@ const LandingPage = () => {
               <FaUsers className="text-indigo-600 text-4xl mx-auto mb-4" />
               <h3 className="font-bold text-xl mb-2">Team Management</h3>
               <p className="text-gray-600">
-                Manage your team's roster, finances, and strategies.
+                Manage your team roster, finances, and strategies.
               </p>
             </div>
             <div className="w-64 p-6 bg-white rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">

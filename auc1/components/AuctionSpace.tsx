@@ -49,12 +49,34 @@ const AuctionSpace = () => {
     }
   }, [pathname]);
 
+  // useEffect(() => {
+  //   socket.emit("getAuctionState", (data:any) => {
+  //     setCurrentPlayer(data.currentPlayer);
+  //     setHighestBid(data.highestBid);
+  //     setHighestBidTeam(data.highestBidTeam);
+  //   });
   useEffect(() => {
-    socket.emit("getAuctionState", (data: any) => {
-      setCurrentPlayer(data.currentPlayer);
-      setHighestBid(data.highestBid);
-      setHighestBidTeam(data.highestBidTeam);
+    socket.emit("getAuctionState", (data: unknown) => {
+        if (
+            typeof data === "object" &&
+            data !== null &&
+            "currentPlayer" in data &&
+            "highestBid" in data &&
+            "highestBidTeam" in data
+        ) {
+            const { currentPlayer, highestBid, highestBidTeam } = data as {
+                currentPlayer: string;
+                highestBid: number;
+                highestBidTeam: string;
+            };
+
+            setCurrentPlayer(currentPlayer);
+            setHighestBid(highestBid);
+            setHighestBidTeam(highestBidTeam);
+        }
     });
+}, []);
+
 
     socket.on('playerSelected', (player) => {
       setCurrentPlayer(null); // Trigger exit animation

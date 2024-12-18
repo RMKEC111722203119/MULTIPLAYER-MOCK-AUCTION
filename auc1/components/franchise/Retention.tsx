@@ -88,14 +88,14 @@ const Retention = ({ team }: { team: string }) => {
       // Iterate through selected players and submit each one individually
       for (let index = 0; index < selectedPlayers.length; index++) {
         const player = selectedPlayers[index];
-        let payload = {
+        const payload = {
           ...player,
           soldStatus: 'sold',
           soldPrice: priceDistribution[index]*10000000, // Price based on index
           soldTeam: team, // Team from props
         };
 
-        if(payload.capStatus!="capped"){
+        if(payload.capStatus=="Uncapped"){
           payload.soldPrice = 40000000;
         }
 

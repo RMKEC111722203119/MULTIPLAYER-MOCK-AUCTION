@@ -39,7 +39,8 @@ const UpcomingPlayers = () => {
       const data = await response.json();
       setPlayers(data.docs || []);  // Ensure players are always an array
       setTotalPages(data.totalPages || 1);
-      setFilteredPlayers(data.docs || []);  // Ensure filteredPlayers is initialized
+      setFilteredPlayers(data.docs || []);
+      setPageSize(10)  // Ensure filteredPlayers is initialized
     };
     console.log("fetchUpcomingPlayers",players);
     fetchUpcomingPlayers();
