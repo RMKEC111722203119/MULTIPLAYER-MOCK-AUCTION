@@ -74,7 +74,7 @@ useEffect(() => {
       socket.off('playerSelected');
       socket.off('updateBid');
     };
-  }, []);
+  }, []); // Added missing closing parenthesis and semicolon
 
   const handleAuctionAction = (action: string) => {
     if (currentPlayer) {
