@@ -41,7 +41,7 @@ const UpcomingPlayers = () => {
       setTotalPages(data.totalPages || 1);
       setFilteredPlayers(data.docs || []);  // Ensure filteredPlayers is initialized
     };
-
+    console.log("fetchUpcomingPlayers",players);
     fetchUpcomingPlayers();
   }, [currentPage, pageSize, sortBy, sortOrder, searchTerm]);
 
@@ -65,7 +65,6 @@ const UpcomingPlayers = () => {
   return (
     <div className="bg-white p-6 rounded-lg shadow-md border border-gray-300 col-span-3">
       <h2 className="text-2xl font-semibold text-gray-800 mb-4">Upcoming Players</h2>
-
       {/* Search Input */}
       <input
         type="text"
@@ -74,7 +73,7 @@ const UpcomingPlayers = () => {
         value={searchTerm}
         onChange={handleSearchChange}
       />
-
+      
       <table className="w-full text-center border-collapse">
         <thead>
           <tr className="bg-gray-700 text-white">
@@ -141,6 +140,8 @@ const UpcomingPlayers = () => {
         </button>
       </div>
     </div>
+
+        
   );
 };
 

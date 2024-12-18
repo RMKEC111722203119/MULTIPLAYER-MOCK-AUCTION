@@ -32,11 +32,6 @@ const LandingPage = () => {
       {/* Header */}
       <div className="relative py-12">
         <div className="absolute inset-0">
-          <img
-            src="/images/ipl_background.jpg"
-            alt="IPL Background"
-            className="w-full h-full object-cover opacity-10"
-          />
         </div>
         <div className="relative z-10">
           <h1 className="text-5xl font-extrabold text-center text-gray-800 transition-transform transform hover:scale-105">

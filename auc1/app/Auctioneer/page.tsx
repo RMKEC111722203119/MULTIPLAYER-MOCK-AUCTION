@@ -3,12 +3,9 @@
 import FranchisePurseRTMInfo from "@/components/auctioner/FranchisePurseRtmInfo";
 import SoldPlayers from "@/components/auctioner/SoldPlayers";
 import UpcomingPlayersToAuction from "@/components/auctioner/UpcomingPlayerToAuction";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 
 const Auctioneer = () => {
-    const [franchises, setFranchises] = useState([]);
-    const [soldPlayers, setSoldPlayers] = useState([]);
-    const [upcomingPlayers, setUpcomingPlayers] = useState([]);
     const [showConfirm, setShowConfirm] = useState(false);
 
     const handleReset = async () => {
