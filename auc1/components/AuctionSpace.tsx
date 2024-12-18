@@ -5,6 +5,15 @@ import { FaGavel, FaUsers, FaMoneyBillWave } from 'react-icons/fa';
 import socket from '@/socket/socket';
 import axios from 'axios';
 
+interface Player {
+  firstName: string;
+  surname: string;
+  specialism: string;
+  reservePrice: number;
+  country: string;
+  // ...additional fields as needed
+}
+
 const teamColors: { [key: string]: string } = {
   "Mumbai Indians": "text-blue-500",
   "Chennai Super Kings": "text-yellow-500",
@@ -19,7 +28,7 @@ const teamColors: { [key: string]: string } = {
 };
 
 const AuctionSpace = () => {
-  const [currentPlayer, setCurrentPlayer] = useState<any>({});
+  const [currentPlayer, setCurrentPlayer] = useState<Player | null>(null);
   const [highestBid, setHighestBid] = useState<number>(0);
   const [highestBidTeam, setHighestBidTeam] = useState<string>('');
   const pathname = usePathname();
@@ -50,13 +59,13 @@ const AuctionSpace = () => {
   }, [pathname]);
 
 useEffect(() => {
-    socket.emit("getAuctionState", (data: { currentPlayer: any; highestBid: number; highestBidTeam: string }) => {
+    socket.emit("getAuctionState", (data: { currentPlayer: Player | null; highestBid: number; highestBidTeam: string }) => {
         setCurrentPlayer(data.currentPlayer);
         setHighestBid(data.highestBid);
         setHighestBidTeam(data.highestBidTeam);
     });
 
-    socket.on('playerSelected', (player) => {
+    socket.on('playerSelected', (player: Player) => {
       setCurrentPlayer(null); // Trigger exit animation
       setTimeout(() => {
         setCurrentPlayer(player); // Trigger enter animation
