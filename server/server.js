@@ -9,15 +9,18 @@ const socketHandler = require("./socket/socket.js");
 const dashboard = require("./routes/dashboard");
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: "*",
+}));
 app.use(express.json());
 
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000", // Allow requests from your Next.js app
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD" , "PATCH"], // Allow all REST methods
+    origin: "*", // Allow requests from your Next.js app
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "PATCH"], // Allow all REST methods
   },
+  transports: ["polling"], // Add long polling as a transport option
 });
 
 connectDB();
