@@ -1,4 +1,5 @@
 "use client";
+import { time } from 'console';
 import React, { useState, useEffect } from 'react';
 
 const PurchasedPlayers = ({ team }: { team: string }) => {
@@ -23,6 +24,7 @@ const PurchasedPlayers = ({ team }: { team: string }) => {
   useEffect(() => {
     const fetchPlayers = async () => {
       try {
+        await new Promise(resolve => setTimeout(resolve, 3000));
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auctioneer/sold-player?team=${team}`);
         const data = await response.json();
         setPlayers(data);

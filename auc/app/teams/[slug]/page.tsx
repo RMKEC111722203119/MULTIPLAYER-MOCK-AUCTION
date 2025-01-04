@@ -14,7 +14,6 @@ interface PageProps {
 }
 
 const Page = ({ params }: PageProps) => {
-    const [slug, setSlug] = useState("");
     const [fslug, setFslug] = useState("");
     const [generatedPassword, setGeneratedPassword] = useState("");
     const [userInput, setUserInput] = useState("");
@@ -23,16 +22,16 @@ const Page = ({ params }: PageProps) => {
 
     useEffect(() => {
       const fetchSlug = async () => {
-        const { slug } = await params;
-        setSlug(slug);
-       
-        setFslug(slug.replace(/%20/g, " "));
+        try {
+          const { slug } = await params;
+          setFslug(slug.replace(/%20/g, " "));
+        } catch (error) {
+          console.error("Error fetching slug:", error);
+        }
       };
       fetchSlug();
     }, [params]);
-  
-    console.log(slug);
-    
+
     useEffect(() => {
       if (!fslug) return;
 
