@@ -7,9 +7,7 @@ import UpcomingPlayersToAuction from "@/components/auctioner/UpcomingPlayerToAuc
 import { useEffect, useState } from "react";
 
 const Auctioneer = () => {
-    const [franchises, setFranchises] = useState([]);
-    const [soldPlayers, setSoldPlayers] = useState([]);
-    const [upcomingPlayers, setUpcomingPlayers] = useState([]);
+    
     const [showConfirm, setShowConfirm] = useState(false);
 
     const handleReset = async () => {
