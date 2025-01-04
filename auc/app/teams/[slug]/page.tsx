@@ -95,7 +95,7 @@ const Page = ({ params }: PageProps) => {
           <PurseAndTeamInfo team={fslug} />
           {unlocked && <BidOptions team={fslug} />}
           {unlocked && <Retention team={fslug} />}
-          <PurchasedPlayers team={fslug} />
+          {/* <PurchasedPlayers team={fslug} /> */}
           <div className="col-span-1 lg:col-span-3">
             <Starting11 teamName={fslug} />
           </div>
