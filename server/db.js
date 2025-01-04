@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const connectDB = async () => {
   try {
     // Connect to MongoDB using the URI from the environment file
-    await mongoose.connect("mongodb+srv://root:1234@auction-backend.kejvt.mongodb.net/");
+    await mongoose.connect("mongodb://localhost:27017/");
     console.log('MongoDB connected');
   } catch (error) {
     console.error('Error connecting to MongoDB:', error);

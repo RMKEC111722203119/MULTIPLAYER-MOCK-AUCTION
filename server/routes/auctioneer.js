@@ -116,6 +116,41 @@ router.get('/upcoming-players', async (req, res) => {
 });
 
 
+router.get('/unsold-players', async (req, res) => {
+    try {
+        const { page = 1, limit = 20, sortBy = 'firstName', sortOrder = 'asc', search = '' } = req.query;
+
+        // Construct the query to search based on name, specialism, and country
+        const query = {
+            soldStatus: 'unsold',  // Ensure this field exists
+            // Optional search conditions only if search term exists
+            ...(search && {
+            $or: [
+                { firstName: { $regex: search, $options: 'i' } },
+                { surname: { $regex: search, $options: 'i' } },
+                { specialism: { $regex: search, $options: 'i' } },
+                { country: { $regex: search, $options: 'i' } }
+            ]
+            })
+        };
+
+        // Pagination and sorting options
+        const options = {
+            page: parseInt(page, 10),
+            limit: parseInt(limit, 10),
+            sort: sortBy ? { [sortBy]: sortOrder === 'asc' ? 1 : -1 } : {}
+        };
+
+        // Fetch the upcoming players based on the query and options
+        const upcomingPlayers = await Player.paginate(query, options);
+
+        // Respond with the paginated players data
+        res.json(upcomingPlayers);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 router.post('/rtm', async (req, res) => {
     try {
         const {payload} = req.body;
@@ -127,12 +162,19 @@ router.post('/rtm', async (req, res) => {
             return res.status(404).json({ message: "Team not found." });
         }
         let rtm = await Team.findOne({ teamName: payload.soldTeam }, { rtmCardsLeft: 1 });
+        console.log("rtm:", rtm);
         if (rtm && rtm.rtmCardsLeft > 0) {
+            if(payload.previousTeam===payload.soldTeam){
             rtm = rtm.rtmCardsLeft - 1;
-            if (isNaN(rtm)) {
-                console.log("Invalid RTM cards value.");
-                return res.status(400).json({ message: "Invalid RTM cards value." });
             }
+            else{
+                rtm = rtm.rtmCardsLeft - 0;
+            }
+        console.log("rtm: after update", rtm);
+            // if (isNaN(rtm.rtmCardsLeft) || rtm.rtmCardsLeft < 0) {
+            //     console.log("Invalid RTM cards value");
+            //     return res.status(400).json({ message: "Invalid RTM cards value." });
+            // }
             const updatedTeam = await Team.findOneAndUpdate(
                 { teamName: payload.soldTeam },
                 { rtmCardsLeft: rtm },

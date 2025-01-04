@@ -9,18 +9,15 @@ const socketHandler = require("./socket/socket.js");
 const dashboard = require("./routes/dashboard");
 
 const app = express();
-app.use(cors({
-  origin: "*",
-}));
+app.use(cors());
 app.use(express.json());
 
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: "*", // Allow requests from your Next.js app
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "PATCH"], // Allow all REST methods
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD" , "PATCH"], // Allow all REST methods
   },
-  transports: ["polling"], // Add long polling as a transport option
 });
 
 connectDB();
@@ -34,6 +31,6 @@ app.use("/dashboard", dashboard);
 
 // Start the server
 const PORT = 5000;
-server.listen(PORT, () => {
+server.listen(PORT, '0.0.0.0', () => {
   console.log(`Socket.IO server running on http://localhost:${PORT}`);
 });
