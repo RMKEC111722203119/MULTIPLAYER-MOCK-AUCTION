@@ -12,23 +12,35 @@ const TeamComparison = () => {
 
   // Track voted positions and user sessions
   const [votedPositions, setVotedPositions] = useState<Set<number>>(() => {
-    const saved = localStorage.getItem('voted-positions');
-    return new Set(saved ? JSON.parse(saved) : []);
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('voted-positions');
+      return new Set(saved ? JSON.parse(saved) : []);
+    }
+    return new Set();
   });
 
   const [userSessions] = useState<Record<string, number>>(() => {
-    const saved = localStorage.getItem('user-voting-sessions');
-    return saved ? JSON.parse(saved) : {};
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('user-voting-sessions');
+      return saved ? JSON.parse(saved) : {};
+    }
+    return {};
   });
 
   const [currentSession, setCurrentSession] = useState(() => {
-    return localStorage.getItem('current-session') || '1';
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('current-session') || '1';
+    }
+    return '1';
   });
 
   // Modified point state to track points per session
   const [playerPoints, setPlayerPoints] = useState<Record<string, Record<string, number>>>(() => {
-    const saved = localStorage.getItem('player-comparison-points');
-    return saved ? JSON.parse(saved) : {};
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('player-comparison-points');
+      return saved ? JSON.parse(saved) : {};
+    }
+    return {};
   });
 
   // Add scoring history state
@@ -40,19 +52,24 @@ const TeamComparison = () => {
     team1Points: number;
     team2Points: number;
   }>>(() => {
-    const saved = localStorage.getItem('scoring-history');
-    return saved ? JSON.parse(saved) : [];
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('scoring-history');
+      return saved ? JSON.parse(saved) : [];
+    }
+    return [];
   });
 
   // Modified session state to include draw option
   const [currentVotes, setCurrentVotes] = useState<Record<number, string>>({});
 
   useEffect(() => {
-    localStorage.setItem('voted-positions', JSON.stringify(Array.from(votedPositions)));
-    localStorage.setItem('player-comparison-points', JSON.stringify(playerPoints));
-    localStorage.setItem('user-voting-sessions', JSON.stringify(userSessions));
-    localStorage.setItem('current-session', currentSession);
-    localStorage.setItem('scoring-history', JSON.stringify(scoringHistory));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('voted-positions', JSON.stringify(Array.from(votedPositions)));
+      localStorage.setItem('player-comparison-points', JSON.stringify(playerPoints));
+      localStorage.setItem('user-voting-sessions', JSON.stringify(userSessions));
+      localStorage.setItem('current-session', currentSession);
+      localStorage.setItem('scoring-history', JSON.stringify(scoringHistory));
+    }
   }, [votedPositions, playerPoints, userSessions, currentSession, scoringHistory]);
 
   // Calculate cumulative scores
@@ -111,10 +128,12 @@ const TeamComparison = () => {
     setVotedPositions(new Set());
     setCurrentSession('1');
     setCurrentVotes({});
-    localStorage.removeItem('player-comparison-points');
-    localStorage.removeItem('scoring-history');
-    localStorage.removeItem('voted-positions');
-    localStorage.removeItem('current-session');
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('player-comparison-points');
+      localStorage.removeItem('scoring-history');
+      localStorage.removeItem('voted-positions');
+      localStorage.removeItem('current-session');
+    }
   };
 
   // Handle skip voting
