@@ -16,7 +16,7 @@ const TeamComparison = () => {
     return new Set(saved ? JSON.parse(saved) : []);
   });
 
-  const [userSessions, setUserSessions] = useState<Record<string, number>>(() => {
+  const [userSessions] = useState<Record<string, number>>(() => {
     const saved = localStorage.getItem('user-voting-sessions');
     return saved ? JSON.parse(saved) : {};
   });

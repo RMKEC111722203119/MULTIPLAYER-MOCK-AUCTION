@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 w-full bg-gray-800 text-white p-4 shadow-lg z-50 transition-all duration-300">
@@ -14,8 +16,8 @@ const Navbar = () => {
           {/* <a href="/dashboard" className="hover:text-yellow-400 transition-colors duration-300">Dashboard</a>
           <a href="/players" className="hover:text-yellow-400 transition-colors duration-300">Players</a>
           <a href="/auction" className="hover:text-yellow-400 transition-colors duration-300">Auction</a> */}
-          <a href="/teams" className="hover:text-yellow-400 transition-colors duration-300">Teams</a>
-          <a href="/test" className="hover:text-yellow-400 transition-colors duration-300">Compare Teams</a>
+          <Link href="/teams" className="hover:text-yellow-400 transition-colors duration-300">Teams</Link>
+          <Link href="/test" className="hover:text-yellow-400 transition-colors duration-300">Compare Teams</Link>
         </div>
 
         {/* Mobile Menu Toggle */}

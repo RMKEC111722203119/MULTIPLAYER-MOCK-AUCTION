@@ -4,10 +4,10 @@ import { usePathname } from 'next/navigation';
 import { FaGavel, FaUsers, FaMoneyBillWave } from 'react-icons/fa';
 import socket from '@/socket/socket';
 import axios from 'axios';
-import { io } from 'socket.io-client';
+
 
 // Add new Notification component at the top of the file
-const Notification = ({ message, type }: { message: string, type: string }) => {
+const Notification = ({ message }: { message: string, type: string }) => {
   const isSold = message.toLowerCase().includes('sold') || message.toLowerCase().includes('rtm');
   const isNewPlayer = message.toLowerCase().includes('up for auction');
   const isUnsold = message.toLowerCase().includes('unsold');
@@ -52,6 +52,24 @@ const Notification = ({ message, type }: { message: string, type: string }) => {
   );
 };
 
+interface Player {
+  firstName: string;
+  surname: string;
+  specialism: string;
+  reservePrice: number;
+  country: string;
+  previousTeam: string;
+  soldStatus?: string;
+  soldPrice?: number;
+  soldTeam?: string;
+}
+
+interface AuctionState {
+  currentPlayer: Player;
+  highestBid: number;
+  highestBidTeam: string;
+}
+
 const teamColors: { [key: string]: string } = {
   "Mumbai Indians": "text-blue-500",
   "Chennai Super Kings": "text-yellow-500",
@@ -66,7 +84,7 @@ const teamColors: { [key: string]: string } = {
 };
 
 const AuctionSpace = () => {
-  const [currentPlayer, setCurrentPlayer] = useState<any>(null);
+  const [currentPlayer, setCurrentPlayer] = useState<Player | null>(null);
   const [highestBid, setHighestBid] = useState<number>(0);
   const [highestBidTeam, setHighestBidTeam] = useState<string>('');
   const pathname = usePathname();
@@ -100,7 +118,7 @@ const AuctionSpace = () => {
   }, [pathname]);
 
   useEffect(() => {
-    socket.emit("getAuctionState", (data: any) => {
+    socket.emit("getAuctionState", (data: AuctionState) => {
       setCurrentPlayer(data.currentPlayer);
       setHighestBid(data.highestBid);
       setHighestBidTeam(data.highestBidTeam);

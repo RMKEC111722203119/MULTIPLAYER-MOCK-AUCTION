@@ -93,7 +93,7 @@ const Retention = ({ team }: { team: string }) => {
     try {
       for (let index = 0; index < selectedPlayers.length; index++) {
         const player = selectedPlayers[index];
-        let slotPrice = priceDistribution[index];
+        const slotPrice = priceDistribution[index];
         let finalPrice = slotPrice * 10000000;
 
         // Ensure uncapped players default to 4 if user did not change the distribution
@@ -101,7 +101,7 @@ const Retention = ({ team }: { team: string }) => {
           finalPrice = 40000000;
         }
 
-        var payload = {
+        let payload = {
           ...player,
           soldStatus: 'sold',
           soldPrice: finalPrice,

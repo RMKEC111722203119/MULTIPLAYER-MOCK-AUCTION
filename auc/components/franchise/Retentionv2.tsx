@@ -88,7 +88,7 @@ const Retention = ({ team }: { team: string }) => {
       // Iterate through selected players and submit each one individually
       for (let index = 0; index < selectedPlayers.length; index++) {
         const player = selectedPlayers[index];
-        var payload = {
+        let payload = {
           ...player,
           soldStatus: 'sold',
           soldPrice: priceDistribution[index]*10000000, // Price based on index
