@@ -8,13 +8,13 @@ import Starting11 from "@/components/franchise/Starting11";
 import UpcomingPlayers from "@/components/franchise/UpcomingPlayers";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
-const Page = ({ params }: PageProps) => {
-    const { slug } = params;
+const Page = async ({ params }: PageProps) => {
+    const { slug } = await params;
     const fslug = slug.replace(/%20/g, " ");
     const [generatedPassword, setGeneratedPassword] = useState("");
     const [userInput, setUserInput] = useState("");
