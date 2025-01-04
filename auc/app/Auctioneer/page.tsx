@@ -4,10 +4,10 @@ import FranchisePurseRTMInfo from "@/components/auctioner/FranchisePurseRtmInfo"
 import SoldPlayers from "@/components/auctioner/SoldPlayers";
 import UnsoldPlayers from "@/components/auctioner/UnsoldPlayers";
 import UpcomingPlayersToAuction from "@/components/auctioner/UpcomingPlayerToAuction";
-import { useEffect, useState } from "react";
+import {useState } from "react";
 
 const Auctioneer = () => {
-    
+
     const [showConfirm, setShowConfirm] = useState(false);
 
     const handleReset = async () => {

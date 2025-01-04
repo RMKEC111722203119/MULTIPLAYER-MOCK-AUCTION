@@ -10,14 +10,14 @@ const dashboard = require("./routes/dashboard");
 
 const app = express();
 app.use(cors({
-    origin: "*",
+    origin: "https://multiplayer-mock-auction.vercel.app",
 }));
 app.use(express.json());
 
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "*", // Removed trailing slash
+    origin: "https://multiplayer-mock-auction.vercel.app", // Removed trailing slash
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "PATCH"], // Allow all REST methods
   },
 });

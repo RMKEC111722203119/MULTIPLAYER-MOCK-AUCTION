@@ -101,7 +101,7 @@ const Retention = ({ team }: { team: string }) => {
           finalPrice = 40000000;
         }
 
-        let payload = {
+        const payload = {
           ...player,
           soldStatus: 'sold',
           soldPrice: finalPrice,
