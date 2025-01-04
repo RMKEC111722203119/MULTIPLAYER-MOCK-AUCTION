@@ -13,8 +13,8 @@ interface PageProps {
   }>;
 }
 
-const Page = async ({ params }: PageProps) => {
-    const { slug } = await params;
+const Page = ({ params }: PageProps) => {
+    const [slug, setSlug] = useState("");
     const fslug = slug.replace(/%20/g, " ");
     const [generatedPassword, setGeneratedPassword] = useState("");
     const [userInput, setUserInput] = useState("");
@@ -22,6 +22,12 @@ const Page = async ({ params }: PageProps) => {
     const [anyTeamUnlocked, setAnyTeamUnlocked] = useState(false);
 
     useEffect(() => {
+      const fetchSlug = async () => {
+        const { slug } = await params;
+        setSlug(slug);
+      };
+      fetchSlug();
+
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
         if (key?.endsWith("-unlocked") && localStorage.getItem(key) === "true") {
@@ -44,7 +50,7 @@ const Page = async ({ params }: PageProps) => {
         setGeneratedPassword(generatePass());
       }, 60000);
       return () => clearInterval(interval);
-    }, [fslug]);
+    }, [params, fslug]);
 
     const handleUnlock = () => {
       if (userInput === generatedPassword) {
