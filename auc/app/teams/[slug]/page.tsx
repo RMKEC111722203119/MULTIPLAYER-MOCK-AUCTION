@@ -7,7 +7,13 @@ import Retention from "@/components/franchise/Retention";
 import Starting11 from "@/components/franchise/Starting11";
 import UpcomingPlayers from "@/components/franchise/UpcomingPlayers";
 
-const Page = ({ params }: { params: { slug: string } }) => {
+interface PageProps {
+  params: {
+    slug: string;
+  };
+}
+
+const Page = ({ params }: PageProps) => {
     const { slug } = params;
     const fslug = slug.replace(/%20/g, " ");
     const [generatedPassword, setGeneratedPassword] = useState("");
