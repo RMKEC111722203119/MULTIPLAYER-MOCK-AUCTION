@@ -37,15 +37,16 @@ const PurchasedPlayers = ({ team }: { team: string }) => {
   }, [team]);
 
   // Group players by specialism
-  const groupedPlayers = players.reduce((groups, player) => {
-    const playerDetail = player.playerDetails[0]; // Get player details from the array
-    const { specialism } = playerDetail;
-    if (!groups[specialism]) {
-      groups[specialism] = [];
-    }
-    groups[specialism].push(playerDetail);
-    return groups;
-  }, {} as Record<string, PlayerDetails[]>);
+  const groupedPlayers = players
+    .map(player => player.playerDetails[0]) // Get player details from the array
+    .reduce((groups, playerDetail) => {
+      const { specialism } = playerDetail;
+      if (!groups[specialism]) {
+        groups[specialism] = [];
+      }
+      groups[specialism].push(playerDetail);
+      return groups;
+    }, {} as Record<string, PlayerDetails[]>);
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md border border-gray-300 col-span-3">
