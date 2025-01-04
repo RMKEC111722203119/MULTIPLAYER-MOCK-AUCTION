@@ -15,7 +15,7 @@ interface PageProps {
 
 const Page = ({ params }: PageProps) => {
     const [slug, setSlug] = useState("");
-    const fslug = slug.replace(/%20/g, " ");
+    
     const [generatedPassword, setGeneratedPassword] = useState("");
     const [userInput, setUserInput] = useState("");
     const [unlocked, setUnlocked] = useState(false);
@@ -27,7 +27,7 @@ const Page = ({ params }: PageProps) => {
         setSlug(slug);
       };
       fetchSlug();
-
+      
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
         if (key?.endsWith("-unlocked") && localStorage.getItem(key) === "true") {
@@ -35,7 +35,7 @@ const Page = ({ params }: PageProps) => {
           break;
         }
       }
-      const storedUnlocked = localStorage.getItem(`${fslug}-unlocked`);
+      const storedUnlocked = localStorage.getItem(`${slug}-unlocked`);
       if (storedUnlocked === "true") {
         setUnlocked(true);
       }
@@ -50,12 +50,12 @@ const Page = ({ params }: PageProps) => {
         setGeneratedPassword(generatePass());
       }, 60000);
       return () => clearInterval(interval);
-    }, [params, fslug]);
+    }, [params, slug]);
 
     const handleUnlock = () => {
       if (userInput === generatedPassword) {
         setUnlocked(true);
-        localStorage.setItem(`${fslug}-unlocked`, "true");
+        localStorage.setItem(`${slug}-unlocked`, "true");
       } else {
         alert("Wrong password");
       }
@@ -65,7 +65,7 @@ const Page = ({ params }: PageProps) => {
       <div className="p-8 bg-gray-50 min-h-screen">
         {/* Title */}
         <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">
-          {fslug ? `${fslug.toUpperCase()} Franchise Dashboard` : "Franchise Dashboard"}
+          {slug ? `${slug.toUpperCase()} Franchise Dashboard` : "Franchise Dashboard"}
         </h1>
   
         {!unlocked && !anyTeamUnlocked && (
@@ -85,12 +85,12 @@ const Page = ({ params }: PageProps) => {
         )}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Always visible components */}
-          <PurseAndTeamInfo team={fslug} />
-          {unlocked && <BidOptions team={fslug} />}
-          {unlocked && <Retention team={fslug} />}
-          <PurchasedPlayers team={fslug} />
+          <PurseAndTeamInfo team={slug} />
+          {unlocked && <BidOptions team={slug} />}
+          {unlocked && <Retention team={slug} />}
+          <PurchasedPlayers team={slug} />
           <div className="col-span-1 lg:col-span-3">
-            <Starting11 teamName={fslug} />
+            <Starting11 teamName={slug} />
           </div>
           <UpcomingPlayers />
         </div>
