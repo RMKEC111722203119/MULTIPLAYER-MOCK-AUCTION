@@ -1,5 +1,5 @@
 "use client";
-import { time } from 'console';
+
 import React, { useState, useEffect } from 'react';
 
 const PurchasedPlayers = ({ team }: { team: string }) => {
