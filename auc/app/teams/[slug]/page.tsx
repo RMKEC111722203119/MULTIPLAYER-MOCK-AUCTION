@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import BidOptions from "@/components/franchise/BidOptions";
-// import PurchasedPlayers from "@/components/franchise/PurchasedPlayers";
+import PurchasedPlayers from "@/components/franchise/PurchasedPlayers";
 import PurseAndTeamInfo from "@/components/franchise/PurseandTeamInfo";
 import Retention from "@/components/franchise/Retention";
 import Starting11 from "@/components/franchise/Starting11";
@@ -95,7 +95,7 @@ const Page = ({ params }: PageProps) => {
           <PurseAndTeamInfo team={fslug} />
           {unlocked && <BidOptions team={fslug} />}
           {unlocked && <Retention team={fslug} />}
-          {/* <PurchasedPlayers team={fslug} /> */}
+          <PurchasedPlayers team={fslug} />
           <div className="col-span-1 lg:col-span-3">
             <Starting11 teamName={fslug} />
           </div>

@@ -60,7 +60,7 @@ const Starting11: React.FC<Starting11Props> = ({ teamName }) => {
   }, [teamName]);
 
   // Flatten all details
-  const allDetails = players.flatMap((p) => p.playerDetails);
+  const allDetails = players.map((p) => p.playerDetails).flat();
 
   // Filter out already selected or backup players
   const getAvailablePlayers = (currentIndex: number) => {
