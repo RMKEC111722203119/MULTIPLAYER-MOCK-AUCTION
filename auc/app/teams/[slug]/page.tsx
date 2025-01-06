@@ -24,7 +24,8 @@ const Page = ({ params }: PageProps) => {
       const fetchSlug = async () => {
         try {
           const { slug } = await params;
-          setFslug(slug.replace(/%20/g, " "));
+          const formattedSlug = slug.replace(/%20/g, " ");
+          setFslug(formattedSlug);
         } catch (error) {
           console.error("Error fetching slug:", error);
         }
@@ -95,9 +96,9 @@ const Page = ({ params }: PageProps) => {
           <PurseAndTeamInfo team={fslug} />
           {unlocked && <BidOptions team={fslug} />}
           {unlocked && <Retention team={fslug} />}
-          <PurchasedPlayers team={fslug} />
+         { fslug && <PurchasedPlayers team={fslug} />}
           <div className="col-span-1 lg:col-span-3">
-            <Starting11 teamName={fslug} />
+          {fslug && <Starting11 teamName={fslug} />}
           </div>
           <UpcomingPlayers />
         </div>
